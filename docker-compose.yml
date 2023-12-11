@@ -29,6 +29,32 @@ services:
     networks:
       - laravel
 
+  # MySQL service
+  mysql:
+    image: mysql:latest
+    container_name: laravel-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Ab06sia==1b!
+      MYSQL_DATABASE: stock
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Ab06sia==1b!
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+
+  # PHPmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: laravel-phpmyadmin
+    environment:
+      PMA_HOST: laravel-mysql
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+
 networks:
   laravel:
     driver: bridge
