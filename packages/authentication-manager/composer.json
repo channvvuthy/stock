@@ -1,0 +1,16 @@
+{
+    "name": "vuthy/authentication-manager",
+    "description": "The responsibility of this package is to manage role permissions for users, whether they are directly or indirectly through groups.",
+    "autoload": {
+        "psr-4": {
+            "Vuthy\\AuthenticationManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "vuthy",
+            "email": "vuthy104.infinity@gmail.com"
+        }
+    ],
+    "require": {}
+}
