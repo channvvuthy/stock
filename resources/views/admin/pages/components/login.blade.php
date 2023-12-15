@@ -13,9 +13,10 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">បំពេញពត៍មានរបស់អ្នកដើម្បីប្រើប្រាស់ប្រព័ន្ធ</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="{{ URL::to('admin/login')}}" method="post">
+        @csrf
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
+          <input type="text" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់" name="username" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -23,7 +24,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="លេខសម្ងាត់">
+          <input type="password" class="form-control" placeholder="លេខសម្ងាត់" name="password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -33,7 +34,7 @@
         <div class="row">
           <div class="col-7">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
+              <input type="checkbox" id="remember" name="remember_me">
               <label for="remember">
                 ចងចាំខ្ញុំ
               </label>
@@ -49,10 +50,10 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="forgot-password.html">ភ្លេចពាក្យសម្ងាត់</a>
+        <a href="{{URL::to('admin/password')}}">ភ្លេចពាក្យសម្ងាត់</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">បង្កើតអ្នកប្រើប្រាស់ថ្មី</a>
+        <a href="{{URL::to('admin/register')}}" class="text-center">បង្កើតអ្នកប្រើប្រាស់ថ្មី</a>
       </p>
     </div>
     <!-- /.login-card-body -->
