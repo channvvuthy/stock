@@ -6,7 +6,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html">ប្រព័ន្ធគ្រប់គ្រងការលក់ <b>VSM</b></a>
+    <a href="#">ប្រព័ន្ធគ្រប់គ្រងការលក់ <b>VSM</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -50,7 +50,7 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="{{URL::to('admin/password')}}">ភ្លេចពាក្យសម្ងាត់</a>
+        <a href="{{URL::to('admin/password/reset')}}">ភ្លេចពាក្យសម្ងាត់</a>
       </p>
       <p class="mb-0">
         <a href="{{URL::to('admin/register')}}" class="text-center">បង្កើតអ្នកប្រើប្រាស់ថ្មី</a>

@@ -1,32 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Forgot Password</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-</head>
+@extends('admin.layouts.master')
+@section('title')
+ភ្លេចពាក្យសម្ងាត់
+@endsection
+@section('content')
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="#">ប្រព័ន្ធគ្រប់គ្រងការលក់ <b>VSM</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+      <p class="login-box-msg">ប្រសិនបើអ្នកភ្លេចពាក្យសម្ងាត់? សូមបញ្ចូលពត៍មានអ៊ីម៉ែលរបស់អ្នក!</p>
 
       <form action="recover-password.html" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="text" class="form-control" placeholder="អ៊ីម៉ែលអ្នកប្រើប្រាស់" name="username" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -35,29 +24,20 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Request new password</button>
+            <button type="submit" class="btn btn-primary btn-block">ស្នើរសុំពាក្យសម្ងាត់ថ្មី</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
 
       <p class="mt-3 mb-1">
-        <a href="login.html">Login</a>
+        <a href="{{URL::to('admin/login')}}">ចូលគណនី</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="{{URL::to('admin/register')}}" class="text-center">បង្កើតសមាជិកថ្មី</a>
       </p>
     </div>
     <!-- /.login-card-body -->
   </div>
 </div>
-<!-- /.login-box -->
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-</body>
-</html>
+@endsection
