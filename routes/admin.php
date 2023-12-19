@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['namespace' => '\\App\\Modules\\Auth'], function () {
-        Route::get('/login', 'AuthController@index');
+        Route::get('/login', 'AuthController@index')->middleware('guest');
         Route::post('/login', 'AuthController@login');
         Route::get('/register', 'AuthController@showRegistrationForm');
         Route::post('/register', 'AuthController@register')->name('register');
