@@ -14,5 +14,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['namespace' => '\\App\\Modules\\Dashboard'], function () {
         Route::get('/dashboard', 'DashboardController@index');
     });
+
+    Route::group(['namespace' => '\\App\\Modules\\Product', 'prefix' => 'product'], function () {
+        Route::get('/', 'ProductController@index');
+    });
 });
 
