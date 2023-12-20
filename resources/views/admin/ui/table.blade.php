@@ -74,7 +74,7 @@
                                                 </a>
                                             @endif
                                         @else
-                                            {{Helper::subStr(is_array($result)?$result[$col['field']]:$result->{$col['field']},20) }}
+                                            {{App\Helper\Helper::subStr(is_array($result)?$result[$col['field']]:$result->{$col['field']},20) }}
                                         @endif
 
                                     </td>
@@ -85,7 +85,7 @@
                                     <div class="d-flex flex-row justify-content-center">
                                         @if ($data['view'])
                                             <div class="mr-2">
-                                                <a href="{{Helper::indexUrl()}}/detail/{{is_array($result)?$result[$data['pk']]:$result->{$data['pk']} }}">
+                                                <a href="{{App\Helper\Helper::indexUrl()}}/detail/{{is_array($result)?$result[$data['pk']]:$result->{$data['pk']} }}">
                                                     <button type="button" class="btn btn-primary btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                         View
@@ -95,7 +95,7 @@
                                         @endif
                                         @if ($data['edit'])
                                             <div class="mr-2">
-                                                <a href="{{Helper::indexUrl()}}/edit/{{is_array($result)?$result[$data['pk']]:$result->{$data['pk']} }}">
+                                                <a href="{{App\Helper\Helper::indexUrl()}}/edit/{{is_array($result)?$result[$data['pk']]:$result->{$data['pk']} }}">
                                                     <button type="button" class="btn btn-success btn-sm">
                                                         <i class="fa fa-edit"></i>
                                                         Edit

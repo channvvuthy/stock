@@ -72,7 +72,7 @@ class Helper
         ];
 
         $defaultPostUrls = [
-            '/add' => 'add',
+            '/post' => 'postAdd',
             '/{id}/update' => 'update',
         ];
 

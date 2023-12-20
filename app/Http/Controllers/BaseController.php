@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 
 /**
@@ -112,7 +119,7 @@ class BaseController extends Controller
         return view('admin.add', ['data' => $this->data]);
     }
 
-    
+
     /**
      * Paginate the data.
      *
@@ -121,6 +128,83 @@ class BaseController extends Controller
     public function paginate(): mixed
     {
         return $this->model->orderBy($this->order_by, $this->order)->paginate($this->limit);
+    }
+
+    /**
+     * Handles the POST request for adding data.
+     *
+     * @param Request $request The HTTP request object.
+     * @return Redirector|Application|RedirectResponse The response object.
+     */
+    public function postAdd(Request $request): Redirector|Application|RedirectResponse
+    {
+        $redirectUrl = $request->get('save');
+        $field = $request->except(['_token', 'save']);
+        $request->validate($this->validationForm());
+
+        foreach ($field as $key => $params) {
+            if ($request->hasFile($key)) {
+                $fileName = Helper::imageUpload("images", $request->file($key));
+                $field[$key] = $fileName;
+            }
+            if ($request->input('password')) {
+                $field["password"] = bcrypt($request->input('password'));
+            }
+        }
+
+        $this->model->create($field);
+        return redirect($redirectUrl)->with('message', 'The data has been added');
+    }
+
+    /**
+     * Validates the form and returns an array of validated form fields.
+     *
+     * @return array The array of validated form fields.
+     */
+    public function validationForm(): array
+    {
+        $validated = [];
+
+        foreach ($this->form as $form) {
+            if ($this->isRequired($form)) {
+                $validated[$form['field']] = $form['validated'];
+
+                if (Str::contains($form['validated'], "unique")) {
+                    $this->appendUniqueValidation($validated, $form);
+                }
+            }
+        }
+        return $validated;
+    }
+
+    /**
+     * Checks if the given form is required.
+     *
+     * @param array $form The form to be checked.
+     * @return bool Returns true if the form is required, false otherwise.
+     */
+    protected function isRequired(array $form): bool
+    {
+        return isset($form['required']) && $form['required'];
+    }
+
+    /**
+     * Appends unique validation to the given array.
+     *
+     * @param array &$validated The array to append the unique validation to.
+     * @param array $form The form data.
+     * @throws NotFoundExceptionInterface If the validation fails.
+     * @throws ContainerExceptionInterface If there is a problem with the container.
+     * @return void
+     */
+    protected function appendUniqueValidation(array &$validated, array $form): void
+    {
+        try {
+            $uniqueValidation = $form['validated'] . "," . $form['field'] . "," . request()->get('id');
+            $validated[$form['field']] = $uniqueValidation;
+        } catch (NotFoundExceptionInterface | ContainerExceptionInterface $e) {
+            // Handle the exception if needed
+        }
     }
 
 }
