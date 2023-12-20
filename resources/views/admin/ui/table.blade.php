@@ -4,7 +4,8 @@
             <h3 class="card-title"></h3>
             <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="{{__('common.Search')}}">
+                    <input type="text" name="table_search" class="form-control float-right"
+                           placeholder="{{__('common.Search')}}">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default">
                             <i class="fas fa-search"></i>
@@ -31,10 +32,10 @@
                             <th class="text-center" width="{{$data['action_with']}}">{{__('common.Action')}}</th>
                         @endif
                     @endisset
-        
+
                 </tr>
                 </thead>
-        
+
                 <tbody>
                 @isset($data['result'])
                     @foreach ($data['result'] as $key => $result)
@@ -63,7 +64,7 @@
                                                 @else
                                                     <span>Disable</span>
                                                 @endif
-        
+
                                             @else
                                                 <a href="#"
                                                    class="files">
@@ -75,7 +76,7 @@
                                         @else
                                             {{Helper::subStr(is_array($result)?$result[$col['field']]:$result->{$col['field']},20) }}
                                         @endif
-        
+
                                     </td>
                                 @endif
                             @endforeach

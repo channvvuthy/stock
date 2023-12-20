@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,7 +14,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/register', 'AuthController@showRegistrationForm');
 
         Route::post('/register', 'AuthController@register')->name('register');
-        
+
         Route::get('/password/reset', 'ForgotPasswordController@index');
     });
 
@@ -23,11 +24,11 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['namespace' => '\\App\\Modules\\Product', 'middleware' => 'auth'], function () {
         Route::prefix('product')->group(function () {
-            Route::get('/', 'ProductController@index');
+            Helper::routeGenerator('ProductController');
         });
 
         Route::prefix('category')->group(function () {
-            Route::get('/', 'CategoryController@index');
+            Helper::routeGenerator('CategoryController');
         });
     });
 });

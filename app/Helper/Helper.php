@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
 class Helper
@@ -46,5 +47,38 @@ class Helper
             return \Illuminate\Support\Str::substr($string, 0,$limit) . "...";
         }
         return $string;
+    }
+}
+
+/**
+ * Generate routes for a controller.
+ *
+ * @param string $controller
+ * @param array  $getUrls
+ * @param array  $postUrls
+ * @return void
+ */
+function routeGenerator(string $controller, array $getUrls = [], array $postUrls = []): void
+{
+    $defaultGetUrls = [
+        '/' => 'index',
+        '/{id}/edit' => 'edit',
+        '/add' => 'add',
+    ];
+
+    $defaultPostUrls = [
+        '/add' => 'add',
+        '/{id}/update' => 'update',
+    ];
+
+    $getUrls = array_merge($defaultGetUrls, $getUrls);
+    $postUrls = array_merge($defaultPostUrls, $postUrls);
+
+    foreach ($getUrls as $url => $method) {
+        Route::get($url, $controller . '@' . $method);
+    }
+
+    foreach ($postUrls as $url => $method) {
+        Route::post($url, $controller . '@' . $method);
     }
 }
