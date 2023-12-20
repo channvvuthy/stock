@@ -100,7 +100,7 @@ class BaseController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('admin.index', ['data' => (object)$this->data]);
+        return view('admin.index', ['data' => $this->data]);
     }
 
     /**
@@ -110,6 +110,17 @@ class BaseController extends Controller
     {
         $this->init();
         return view('admin.add', ['data' => $this->data]);
+    }
+
+    
+    /**
+     * Paginate the data.
+     *
+     * @return mixed
+     */
+    public function paginate(): mixed
+    {
+        return $this->model->orderBy($this->order_by, $this->order)->paginate($this->limit);
     }
 
 }
