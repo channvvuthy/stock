@@ -8,9 +8,9 @@
                             {{ $data['title'] }}
                         @endisset
                     </h1>
-                    <div class="pl-3">
-                        <a href="#" class="btn btn-success mb-3">{{ __('common.Create New') }}</a>
-                    </div>
+                    @isset($isNew)
+                        @include('admin.ui.add-new-button')
+                    @endisset
                 </div>
             </div>
 

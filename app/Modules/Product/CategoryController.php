@@ -27,7 +27,7 @@ class CategoryController extends BaseController
             array('field' => 'status', 'title' => 'Status', 'type' => 'status'),
 
         ];
-        
+
         parent::__construct();
 
     }
@@ -42,5 +42,16 @@ class CategoryController extends BaseController
     {
         $this->result = $this->paginate();
         return view('admin.index', ['data' => $this->data]);
+    }
+
+    /**
+     * Retrieves the "Add" view for the admin panel.
+     *
+     * @return View|Factory|Application The "Add" view for the admin panel.
+     */
+    public function getAdd(): View|Factory|Application
+    {
+        $this->data['title'] = trans('common.Create new category');
+        return view('admin.add', ['data' => $this->data]);
     }
 }

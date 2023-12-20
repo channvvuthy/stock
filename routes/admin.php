@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Helper\Helper;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['namespace' => '\\App\\Modules\\Auth'], function () {

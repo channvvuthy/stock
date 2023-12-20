@@ -1,4 +1,5 @@
 <?php
+namespace App\Helper;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -8,13 +9,18 @@ class Helper
     /**
      * @return array|string|null
      */
-    public static function indexUrl(): array|string|null
+    public static function indexUrl(): ?string
     {
-        $pattern = '/add/i';
-        $indexUrl = preg_replace("/\bedit\b.*$/", '', preg_replace($pattern, '', URL::current()));
-        $indexUrl = preg_replace("/\bdelete\b.*$/", "", $indexUrl);
-        $indexUrl = preg_replace("/\badd\b.*$/", "", $indexUrl);
-        return preg_replace("/\bdetail\b.*$/", '', $indexUrl);
+        $segmentsToRemove = ['add', 'edit', 'delete', 'detail'];
+        
+        $currentUrl = URL::current();
+
+        foreach ($segmentsToRemove as $segment) {
+            $pattern = "/\b$segment\b.*$/i";
+            $currentUrl = preg_replace($pattern, '', $currentUrl);
+        }
+
+        return $currentUrl ?: null;
     }
     public static function imageUpload($uploadPath, $file)
     {
@@ -44,41 +50,43 @@ class Helper
     public static function subStr($string, $limit): mixed
     {
         if (strlen($string) > $limit) {
-            return \Illuminate\Support\Str::substr($string, 0,$limit) . "...";
+            return \Illuminate\Support\Str::substr($string, 0, $limit) . "...";
         }
         return $string;
     }
+
+    /**
+     * Generate routes for a controller.
+     *
+     * @param string $controller
+     * @param array  $getUrls
+     * @param array  $postUrls
+     * @return void
+     */
+    public static function routeGenerator(string $controller, array $getUrls = [], array $postUrls = []): void
+    {
+        $defaultGetUrls = [
+            '/' => 'index',
+            '/{id}/edit' => 'edit',
+            '/add' => 'getAdd',
+        ];
+
+        $defaultPostUrls = [
+            '/add' => 'add',
+            '/{id}/update' => 'update',
+        ];
+
+        $getUrls = array_merge($defaultGetUrls, $getUrls);
+        $postUrls = array_merge($defaultPostUrls, $postUrls);
+
+        foreach ($getUrls as $url => $method) {
+            Route::get($url, $controller . '@' . $method);
+        }
+
+        foreach ($postUrls as $url => $method) {
+            Route::post($url, $controller . '@' . $method);
+        }
+    }
 }
 
-/**
- * Generate routes for a controller.
- *
- * @param string $controller
- * @param array  $getUrls
- * @param array  $postUrls
- * @return void
- */
-function routeGenerator(string $controller, array $getUrls = [], array $postUrls = []): void
-{
-    $defaultGetUrls = [
-        '/' => 'index',
-        '/{id}/edit' => 'edit',
-        '/add' => 'add',
-    ];
 
-    $defaultPostUrls = [
-        '/add' => 'add',
-        '/{id}/update' => 'update',
-    ];
-
-    $getUrls = array_merge($defaultGetUrls, $getUrls);
-    $postUrls = array_merge($defaultPostUrls, $postUrls);
-
-    foreach ($getUrls as $url => $method) {
-        Route::get($url, $controller . '@' . $method);
-    }
-
-    foreach ($postUrls as $url => $method) {
-        Route::post($url, $controller . '@' . $method);
-    }
-}
